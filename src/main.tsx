@@ -1,0 +1,33 @@
+import { createRoot } from 'react-dom/client'
+import { StrictMode } from 'react'
+import { ThemeProvider } from "@/components/theme-provider"
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import SignIn from './auth/SignIn.tsx';
+import SignUp from './auth/SignUp.tsx';
+import TwoAuth from './auth/TwoAuth.tsx';
+import Dashboard from './dashboard/Dashboard.tsx';
+import  Settings  from './settings/Settings.tsx';
+import UnAvailable from './errors/404.tsx';
+import Website from './website/website.tsx';
+import App from './App.tsx'
+import './index.css'
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+    <Router>
+      <Routes>
+      <Route path="/" element={<App />} />
+        <Route path="/auth/signin" element={<SignIn />} />
+        <Route path="/auth/signup" element={<SignUp />} />
+        <Route path="/auth/twoauth" element={<TwoAuth />} />
+        <Route path="/auth/twoauth" element={<TwoAuth />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/website" element={<Website />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="*" element={<UnAvailable />} /> {/* Catch-all route */}
+      </Routes>
+    </Router>
+    </ThemeProvider>
+  </StrictMode>,
+)
