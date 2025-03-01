@@ -65,6 +65,7 @@ const SignIn = () => {
       }
 
       localStorage.setItem("user", JSON.stringify(data.user)); // Save user info
+      localStorage.setItem("web", JSON.stringify(data.web)); // Save user info
       navigate("/dashboard");
     } catch (error) {
       setError(error instanceof Error ? error.message : "An unknown error occurred");

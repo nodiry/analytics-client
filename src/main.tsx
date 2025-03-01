@@ -8,7 +8,7 @@ import TwoAuth from './auth/TwoAuth.tsx';
 import Dashboard from './dashboard/Dashboard.tsx';
 import  Settings  from './settings/Settings.tsx';
 import UnAvailable from './errors/404.tsx';
-import Website from './website/website.tsx';
+import Metric from './metrics/metric.tsx';
 import App from './App.tsx'
 import './index.css'
 
@@ -23,7 +23,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/auth/twoauth" element={<TwoAuth />} />
         <Route path="/auth/twoauth" element={<TwoAuth />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/website" element={<Website />} />
+        <Route path="/metrics/:id" element={<Metric />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<UnAvailable />} /> {/* Catch-all route */}
       </Routes>

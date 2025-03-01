@@ -2,17 +2,19 @@ const site : string = "http://localhost:3003/";
 export const siteConfig = {
     links : {
         signup:site + "auth/signup",
-        me:site + "auth/me",
         signin:site+"auth/signin",
         twoauth:site+"auth/twoauth",
-        metrics:site + "metrics/",
+        metrics:site + "metric/",
         dashboard:site+"track/",
-        profile:site+"auth/user/",
+        profile:site+"auth/user",
         compute:site+"compute/",
-        website:site+"website/",
+        website:site+"web/",
 
     },
     uz : {
+        nowebmes:"Websayt ulanmagan.",
+        webcreate:"Websayt qoshish",
+        language:"Til",
         metrics:"Ko'rsatkichlar",
         website:"Veb-sayt",
         menu:"Menu",
@@ -93,6 +95,9 @@ export const siteConfig = {
         rejected:"Rad etildi",
     },
     en : {
+        nowebmes:"No website added.",
+        webcreate:"Add website",
+        language:"Language",
         metrics:"Metrics",
         website:"Website",
         menu:"Menu",

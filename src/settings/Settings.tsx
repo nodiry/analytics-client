@@ -4,10 +4,10 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
 const Settings = () => {
-    const token = localStorage.getItem("token");
+    const user = localStorage.getItem("user");
     return (
       <div className="flex flex-col space-y-10 items-center">
-        {!token ? <></>:<NavBar/>}
+        {!user ? <></>:<NavBar/>}
         <p className="text-3xl text-gray-200 mt-12">Settings</p>
         <p className="m-4 text-2xl text-white">Hey, you are not authorized to be here.</p>
         <Button variant="outline" onClick={() =>
