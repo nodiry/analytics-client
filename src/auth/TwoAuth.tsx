@@ -2,7 +2,6 @@ import { useState, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { siteConfig } from '../siteConfig';
 import { words } from '../textConfig';
-import { set_cookie } from '@/cookie';
 import { InputOTP, InputOTPGroup,InputOTPSeparator,InputOTPSlot,} from '@/components/ui/input-otp';
 import { Button } from '@/components/ui/button';
 
@@ -22,17 +21,16 @@ const TwoAuth = () => {
       const response = await fetch(siteConfig.links.twoauth, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials:'include',
         body: JSON.stringify({ email, code }),
       });
 
       const data = await response.json();
       if (!response.ok) throw new Error(data.message || 'Something went wrong');
-
-      if (data.token) {
-        set_cookie('token', data.token);
+        
         localStorage.setItem('user', JSON.stringify(data.user));
         navigate('/dashboard');
-      }
+      
     } catch (error) {
       setError(error instanceof Error ? error.message : 'An unknown error occurred');
     }

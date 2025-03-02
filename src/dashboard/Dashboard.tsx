@@ -11,21 +11,14 @@ const Dashboard = () => {
       return webs ? JSON.parse(webs) : null;
   } catch { return null }});
   return (
-    <div className="flex flex-col w-full space-y-6 min-h-screen">
+    <div className="flex flex-col w-full space-y-6 min-h-screen justify-center items-center">
       <NavBar />
-        <h1 className="mx-2 text-6xl mt-16 font-semibold text-black dark:text-white ">
-          Dashboard
+        <h1 className="mx-2 text-6xl mt-16 font-semibold">
+          {words.dashboard} <WebsiteCreator/>  
         </h1>
           {websites.length>0 ?(            
-              <div  className="flex-col justify-items-center rounded-lg  p-10 m-16 ">
-                {websites.map((w:any) => (
-            <WebsiteCard key={w._id}id={w.unique_key}
-              website_url={w.website_url}
-              total_visits={w.stats.total_visits}
-              daily_visits={w.stats.daily_visits}
-              avg_loading_time={w.stats.pages[0]?.avg_loading_time || 0}
-            /> ))}
-                <WebsiteCreator/>              
+              <div  className="flex-col justify-items-center rounded-lg ">
+                {websites.map((w:any) => ( <WebsiteCard key={w._id} website={w} /> ))}              
               </div>
           ) : (
             <div className="flex-col justify-items-center rounded-lg border-dashed p-10 m-16 border-2 border-neutral-500">

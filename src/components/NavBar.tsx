@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { ModeToggle } from './mode-toggle';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
 import { Button } from './ui/button';
-import { ChartColumn, LayoutDashboard, Menu } from 'lucide-react';
+import {LayoutDashboard, Menu } from 'lucide-react';
 
 const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);

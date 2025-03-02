@@ -57,7 +57,7 @@ export default function WebsiteCreator() {
   return (
     <>
       <TooltipProvider>
-  <Tooltip>
+      <Tooltip>
     <TooltipTrigger>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
@@ -84,7 +84,7 @@ export default function WebsiteCreator() {
       </Dialog>
     </TooltipTrigger>
     <TooltipContent>
-      <p>Add to library</p>
+      <p>Add new website</p>
     </TooltipContent>
   </Tooltip>
 </TooltipProvider>
