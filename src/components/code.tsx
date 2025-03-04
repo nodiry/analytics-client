@@ -3,6 +3,7 @@ import { toast } from "sonner";
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
+import { words } from "@/textConfig";
 
 interface Props {
   unique_key: string;
@@ -11,7 +12,7 @@ interface Props {
 const CodeGuide = ({ unique_key }: Props) => {
   const scriptCode = `<script>
 (function () {
-  const analyticsServer = "http://localhost:3003/track/${unique_key}";
+  const analyticsServer = "https://track.glasscube.io/${unique_key}";
   const getSessionId = () => {
     const existing = localStorage.getItem("session_id");
     if (existing) return existing;
@@ -46,7 +47,7 @@ const CodeGuide = ({ unique_key }: Props) => {
   const highlightedCode = `
 <span style="color:#e06c75;">&lt;script&gt;</span><br>
 <span style="color:#c678dd;">(</span><span style="color:#61afef;">function</span> <span style="color:#c678dd;">()</span> <span style="color:#c678dd;">{</span></span><br>
-<span style="color:#56b6c2;">  const</span> <span style="color:#e5c07b;">analyticsServer</span> = "http://localhost:3003/track/${unique_key}";<br>
+<span style="color:#56b6c2;">  const</span> <span style="color:#e5c07b;">analyticsServer</span> = "https://track.glasscube.io/${unique_key}";<br>
 <span style="color:#56b6c2;">  const</span> <span style="color:#e5c07b;">getSessionId</span> = <span style="color:#c678dd;">()</span> <span style="color:#c678dd;">=> {</span><br>
 <span style="color:#56b6c2;">    const</span> <span style="color:#e5c07b;">existing</span> = localStorage.getItem("session_id");<br>
 <span style="color:#56b6c2;">    if</span> <span style="color:#c678dd;">(</span>existing<span style="color:#c678dd;">)</span> <span style="color:#56b6c2;">return</span> existing;<br>
@@ -79,14 +80,14 @@ const CodeGuide = ({ unique_key }: Props) => {
         <TooltipTrigger>
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="outline">
+              <Button variant="default">
                 <Code />
               </Button>
             </DialogTrigger>
             <DialogContent className="max-w-2xl h-fit ">
               <DialogHeader>
                 <DialogTitle>
-                  Integration Code
+                  {words.integration}
                   <Button 
                     variant="ghost" 
                     size="sm" 
@@ -107,7 +108,7 @@ const CodeGuide = ({ unique_key }: Props) => {
           </Dialog>
         </TooltipTrigger>
         <TooltipContent>
-          <p>Embedding code you need for your website.</p>
+          <p>{words.integrationmes}</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>

@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { siteConfig } from "@/siteConfig";
 import { Plus } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
+import { words } from "@/textConfig";
 
 export default function WebsiteCreator() {
   const [open, setOpen] = useState(false);
@@ -42,11 +43,16 @@ export default function WebsiteCreator() {
 
       const result = await res.json();
       if (!res.ok) throw new Error(result.error || "Something went wrong");
+      
+      const storedWebsites: any[] = JSON.parse(localStorage.getItem("web") || "[]");
+      storedWebsites.push(result.website);
+      localStorage.setItem("web", JSON.stringify(storedWebsites));
 
       toast.success("Website added successfully!");
       setUrl("");
       setDesc("");
       setOpen(false);
+      window.location.reload();
     } catch (error: any) {
       toast.error(error.message);
     } finally {
@@ -65,15 +71,15 @@ export default function WebsiteCreator() {
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Create Website</DialogTitle>
+            <DialogTitle>{words.addwebsite}</DialogTitle>
           </DialogHeader>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <Label htmlFor="url">Website URL</Label>
+              <Label htmlFor="url">{words.websiteurl}</Label>
               <Input id="url" value={url} onChange={(e) => setUrl(e.target.value)} placeholder="https://example.com" />
             </div>
             <div>
-              <Label htmlFor="desc">Description (optional)</Label>
+              <Label htmlFor="desc">{words.description} (optional)</Label>
               <Input id="desc" value={desc} onChange={(e) => setDesc(e.target.value)} placeholder="Describe your website" />
             </div>
             <Button type="submit" disabled={loading}>
@@ -84,7 +90,7 @@ export default function WebsiteCreator() {
       </Dialog>
     </TooltipTrigger>
     <TooltipContent>
-      <p>Add new website</p>
+      <p>{words.addwebsitemes}</p>
     </TooltipContent>
   </Tooltip>
 </TooltipProvider>

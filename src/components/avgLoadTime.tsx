@@ -1,49 +1,57 @@
-import { LineChart, Line, XAxis, YAxis, CartesianGrid } from "recharts"
-import { MetricData } from "./types"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { LineChart, Line, XAxis, YAxis, CartesianGrid } from "recharts";
+import { MetricData } from "./types";
+import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { words } from "@/textConfig";
 
-interface Props {metrics: MetricData[]}
+interface Props {
+  metrics: MetricData[];
+}
 
 const AvgLoadTimeChart = ({ metrics }: Props) => {
-  const chartConfig = { avgLoadTime: { label: "Average Load Time (ms)", color: "#8884d8" }}
+  const chartConfig:ChartConfig = { avgLoadTime: { label: "Average Load Time (ms)" } };
+
+  // Map the metrics to ensure correct timestamp formatting
+  const formattedMetrics = metrics.map((metric) => ({
+    ...metric,
+    formattedTimestamp: new Date(metric.timestamp).toLocaleTimeString(), // Format timestamp
+  }));
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Average Load Time</CardTitle>
-        <CardDescription>Tracking page load speed over time</CardDescription>
+        <CardTitle>{words.avgloadtime}</CardTitle>
+        <CardDescription>{words.avgloadtimedesc}</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
-            <LineChart data={metrics} margin={{ left: 12, right: 12 }}>
-               <CartesianGrid vertical={false} strokeDasharray="3 3" />
-              <XAxis
-                dataKey="timestamp"
-                tickFormatter={(time) => new Date(time).toLocaleTimeString()}
-                tickMargin={8}
-                tickLine={false}
-                axisLine={false}
-              />
-              <YAxis tickLine={false} axisLine={false} />
-              <ChartTooltip cursor={{ stroke: "hsl(var(--muted))" }} content={<ChartTooltipContent />} />
-              <Line
-                type="monotone"
-                dataKey="avgLoadTime" // Fixed typo
-                stroke={chartConfig.avgLoadTime.color}
-                strokeWidth={2}
-                dot={false}
-              />
-            </LineChart>
+          <LineChart data={formattedMetrics} margin={{ left: 8, right: 8 }}>
+            <CartesianGrid vertical={false} strokeDasharray="3 3" />
+            <XAxis
+              dataKey="formattedTimestamp" // Use the formatted timestamp
+              tickMargin={8}
+              tickLine={false}
+              axisLine={false}
+            />
+            <YAxis
+              tickLine={false}
+              axisLine={false}
+              label={{ value: "ms", angle: -90, position: "insideLeft" }} // Y-axis label
+            />
+            <ChartTooltip cursor={{ stroke: "hsl(var(--muted))" }} content={<ChartTooltipContent />} />
+            <Line
+              connectNulls={true}
+              type="monotone"
+              dataKey="avgLoadTime"
+              stroke="#8884d8"
+              strokeWidth={2}
+              dot={false}
+            />
+          </LineChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="leading-none text-muted-foreground">
-          Showing average load time for the last 6 months
-        </div>
-      </CardFooter>
     </Card>
-  )
-}
+  );
+};
 
-export default AvgLoadTimeChart
+export default AvgLoadTimeChart;

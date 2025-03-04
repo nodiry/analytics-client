@@ -18,6 +18,9 @@ import Update from "@/components/updatewebsite";
 import RefreshMetrics from "@/components/refresh";
 import CodeGuide from "@/components/code";
 import DeleteWebsite from "@/components/delete";
+import { words } from "@/textConfig";
+import { StatCard } from "@/components/webcard";
+import GeoDistro from "@/components/geoDistro";
 
 const Metric = () => {
   const { id, period } = useParams(); // Get unique_key and period from URL
@@ -101,38 +104,89 @@ const Metric = () => {
   if (loading) return <div><NavBar /> <Loading /></div>;
   if (error) return <div className="text-red-500">{error}</div>;
 
+  // For formatting avg session duration from seconds to minutes and seconds
+const fSD = (seconds: number) => {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  return `${minutes} mins & ${remainingSeconds.toFixed(0)} sec`;
+};
   return (
-    <div className="flex-col p-6 place-items-center space-y-6">
-      <NavBar />
-      <h1 className="text-2xl font-bold mt-12 mb-4">Metrics for {website?.url} <Info date={website?.created_at || "unknown"} url={website?.url|| "unknown"} desc={website?.desc|| "unknown"}/></h1>
-      <div className="flex flex-row space-x-6 items-center justify-between">
-        <CodeGuide unique_key={website?.unique_key || "null"}/>
-        <RefreshMetrics unique_key={website?.unique_key || "null"}/>
-       <ToggleGroup type="single" value={period} onValueChange={handlePeriodChange}>
-        <ToggleGroupItem variant='outline' value="1" >Day</ToggleGroupItem>
-        <ToggleGroupItem variant='outline' value="2" >Week</ToggleGroupItem>
-        <ToggleGroupItem variant='outline' value="3" >Month</ToggleGroupItem>
-        <ToggleGroupItem variant='outline' value="4">All Time</ToggleGroupItem>
-      </ToggleGroup>
-     {website && <Update website={website}/>} 
-     {website && <DeleteWebsite unique_key={website?.unique_key}/>} 
-      </div>
+    <div className="flex flex-col p-6 space-y-6 w-full max-w-screen overflow-x-hidden">
+  <NavBar />
+  <h1 className="text-2xl font-bold mt-12 mb-4 text-center">
+  <a 
+    href={website?.url?.startsWith('http') ? website.url : `https://${website?.url}`} 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    className="text-blue-500 hover:underline"
+  >
+    {website?.url}
+  </a> Metrics{' '}
+  <Info
+    date={website?.created_at || "unknown"}
+    url={website?.url || "unknown"}
+    desc={website?.desc || "unknown"}
+  />
+</h1>
 
-      {metrics.length > 0 ? (
-        <div className="h-full w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-          <VisitsChart metrics={metrics} />
-          <DeviceStatsChart deviceStats={metrics[metrics.length - 1].deviceStats} />
-          <ReferrersChart referrers={metrics[metrics.length - 1].referrers} />
-          <AvgLoadTimeChart metrics={metrics} />
-          <PagesChart metrics={metrics} />
-          <BounceRateChart metrics={metrics} />
-          <SessionDurationChart metrics={metrics} />
-        </div>
-      ) : (
-        <div className="justify-center">No metrics available for the selected time period.</div>
-      )}
-      <Toaster />
+  {/* Controls - Wraps on Mobile */}
+  <div className="flex flex-col md:flex-row items-center justify-center gap-4 w-full">
+    {/* Toggle Group (Moves Above Buttons on Mobile) */}
+    <div className="w-full md:w-auto flex justify-center">
+      <ToggleGroup
+        type="single"
+        value={period}
+        onValueChange={handlePeriodChange}
+        className="flex flex-wrap justify-center"
+      >
+        <ToggleGroupItem variant="outline" value="1">
+          {words.day}
+        </ToggleGroupItem>
+        <ToggleGroupItem variant="outline" value="2">
+          {words.week}
+        </ToggleGroupItem>
+        <ToggleGroupItem variant="outline" value="3">
+          {words.month}
+        </ToggleGroupItem>
+        <ToggleGroupItem variant="outline" value="4">
+          {words.all}
+        </ToggleGroupItem>
+      </ToggleGroup>
     </div>
+
+    {/* Action Buttons */}
+    <div className="flex flex-wrap justify-center md:justify-end gap-4">
+      <CodeGuide unique_key={website?.unique_key || "null"} />
+      <RefreshMetrics unique_key={website?.unique_key || "null"} />
+      {website && <Update website={website} />}
+      {website && <DeleteWebsite unique_key={website?.unique_key} />}
+    </div>
+  </div>
+
+  {/* Top Metrics */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <StatCard title={words.totalvisits} value={website?.stats.total_visits|| 0} />
+            <StatCard title={words.uniquevisits} value={website?.stats.unique_visitors || 0} />
+            <StatCard title={words.bouncerate} value={`${website?.stats.bounce_rate.toFixed(2)}%`} />
+            <StatCard title={words.avgses} value={fSD(website?.stats.avg_session_duration || 0)} />
+          </div>
+
+  {/* Metrics Section */}
+  {metrics.length > 0 ? (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 w-full">
+      <VisitsChart metrics={metrics} />
+      <DeviceStatsChart metrics={metrics} />
+      <ReferrersChart metrics={metrics} />
+      <AvgLoadTimeChart metrics={metrics} />
+      <PagesChart metrics={metrics} />
+      <BounceRateChart metrics={metrics} />
+      <SessionDurationChart metrics={metrics} />
+      <GeoDistro metrics={metrics}/>
+    </div>
+  ) : ( <div className="text-center text-neutral-500">{words.nometricmes} </div> )}
+  <Toaster />
+</div>
+
   );
 };
 

@@ -10,6 +10,7 @@ import UnAvailable from './errors/404.tsx';
 import Metric from './metrics/metric.tsx';
 import App from './App.tsx'
 import './index.css'
+import ProfilePage from './profile/profile.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -21,6 +22,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/auth/signup" element={<SignUp />} />
         <Route path="/auth/twoauth" element={<TwoAuth />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/profile" element={<ProfilePage />} />
         <Route path="/metrics/:id/:period" element={<Metric />} />
         <Route path="*" element={<UnAvailable />} /> {/* Catch-all route */}
       </Routes>

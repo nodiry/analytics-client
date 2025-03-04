@@ -2,6 +2,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/t
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import { Button } from "./ui/button";
 import { InfoIcon } from "lucide-react";
+import { words } from "@/textConfig";
 
 interface InfoProps {
   date: string;
@@ -30,7 +31,7 @@ const Info: React.FC<InfoProps> = ({ date, url, desc }) => {
           </Dialog>
         </TooltipTrigger>
         <TooltipContent>
-          <p>Info of this website.</p>
+          <p>{words.infomes}</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>

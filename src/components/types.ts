@@ -1,4 +1,3 @@
-// types.ts
 export interface PageStats {
     path: string;
     visits: number;
@@ -6,18 +5,6 @@ export interface PageStats {
     exit_rate: number;
     avg_time_on_page: number;
   }
-  
-  export interface ReferrerStats {
-    referrer: string;
-    count: number;
-  }
-  
-  export interface DeviceDistribution {
-    desktop: number;
-    mobile: number;
-    tablet: number;
-  }
-  
   export interface WebsiteStats {
     total_visits: number;
     monthly_visits: number;
@@ -26,10 +13,9 @@ export interface PageStats {
     avg_session_duration: number;
     bounce_rate: number;
     top_referrers: ReferrerStats[];
-    device_distribution: DeviceDistribution;
+    device_distribution: DeviceStats;
     pages: PageStats[];
   }
-  
   export interface Website {
     _id: string;
     dev: string;
@@ -44,23 +30,19 @@ export interface PageStats {
     url: string;
     visits: number;
   }
-  
   export interface ReferrerStats {
     referrer: string;
     count: number;
   }
-  
   export interface DeviceStats {
     desktop: number;
     mobile: number;
     tablet: number;
   }
-  
   export interface GeoDistribution {
     country: string;
     visits: number;
   }
-  
   export interface MetricData {
     unique_key: string;
     timestamp: string;

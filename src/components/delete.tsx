@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { siteConfig } from "@/siteConfig";
 import { Website } from "./types";
 import { useNavigate } from "react-router-dom";
+import { words } from "@/textConfig";
 
 interface UpdateProps {
   unique_key: string;
@@ -72,13 +73,12 @@ const DeleteWebsite: React.FC<UpdateProps> = ({ unique_key }) => {
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Delete Website</DialogTitle>
+                <DialogTitle>{words.deletewebsite}</DialogTitle>
               </DialogHeader>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <Label htmlFor="confirm">
-                    Please input <span className="text-red-800">"DELETE"</span> to confirm deletion 
-                    of the website and its metrics.
+                  <Label className="mb-2" htmlFor="confirm">
+                    {words.pleaseinput} <span className="text-red-800">DELETE</span> {words.deleteconfirm}
                   </Label>
                   <Input id="confirm" value={confirm} onChange={(e) => setConfirm(e.target.value)} disabled={loading} />
                 </div>
@@ -89,7 +89,7 @@ const DeleteWebsite: React.FC<UpdateProps> = ({ unique_key }) => {
             </DialogContent>
           </Dialog>
         </TooltipTrigger>
-        <TooltipContent>Delete Website and its details</TooltipContent>
+        <TooltipContent>{words.deletewebsitemes}</TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );

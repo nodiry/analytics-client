@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { ModeToggle } from './mode-toggle';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
 import { Button } from './ui/button';
-import {LayoutDashboard, Menu } from 'lucide-react';
+import {LayoutDashboard, LogOutIcon, Menu } from 'lucide-react';
 
 const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -14,8 +14,20 @@ const NavBar = () => {
 
   const navLinks = [
     { path: '/dashboard', label: words.dashboard },
-    { path: '/options', label: words.options },
+    { path: '/profile', label: words.profile },
   ];
+
+  const clearCookies = () => {
+    document.cookie.split(";").forEach((cookie) => {
+      const [name] = cookie.split("=");
+      document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    });
+  };
+  const handleLogout = () => {
+    localStorage.clear();
+    clearCookies();
+    navigate("/");
+  };
 
   return (
     <nav className="fixed top-0 left-0 w-full h-14 px-12 flex items-center justify-between backdrop-blur-md z-50 border-b-1">
@@ -47,12 +59,13 @@ const NavBar = () => {
       </Link>
     ))}
   </div>
-  <div className='mx-16 space-x-8 flex-row'>
+  <div className='mx-8 space-x-8 flex-row'>
   <LangOption />
   <ModeToggle />
+  <Button variant='destructive' onClick={handleLogout}><LogOutIcon/></Button>
   </div>
-        </SheetContent>
-      </Sheet>
+      </SheetContent>
+    </Sheet>
     </nav>
   );
 };

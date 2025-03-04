@@ -12,8 +12,15 @@ const ProfileModal = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false); 
 
+  const clearCookies = () => {
+    document.cookie.split(";").forEach((cookie) => {
+      const [name] = cookie.split("=");
+      document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    });
+  };
   const handleLogout = () => {
     localStorage.clear();
+    clearCookies();
     navigate("/");
   };
 
@@ -28,8 +35,8 @@ const ProfileModal = () => {
         <DropdownMenuContent side="bottom" align="end"
           className="w-48 shadow-lg rounded-lg p-2 z-50" >
 
-          <DropdownMenuItem onClick={() => navigate("/options")}>
-            <Ellipsis className="mr-2" /> {words.options}
+          <DropdownMenuItem onClick={() => navigate("/profile")}>
+            <Ellipsis className="mr-2" /> {words.profile}
           </DropdownMenuItem>
           <DropdownMenuItem >
           <LangOption/> {words.language}

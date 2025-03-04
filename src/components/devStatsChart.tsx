@@ -1,48 +1,59 @@
-import { PieChart, Pie, Cell } from "recharts"
-import {Card,CardContent,CardDescription,CardHeader,CardTitle,} from "@/components/ui/card"
-import {ChartConfig,ChartContainer,ChartLegend,ChartLegendContent,} from "@/components/ui/chart"
-import { DeviceStats } from "./types"
+import { LineChart, Line, XAxis, YAxis, CartesianGrid } from "recharts";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { MetricData } from "./types";
+import { words } from "@/textConfig";
 
-interface Props {deviceStats: DeviceStats}
+interface Props {
+  metrics: MetricData[];
+}
 
-const DeviceStatsChart: React.FC<Props> = ({ deviceStats }) => {
-  const data = [
-    { name: "Desktop", value: deviceStats.desktop, color: "#4A90E2" },
-    { name: "Mobile", value: deviceStats.mobile, color: "#E94E77" },
-    { name: "Tablet", value: deviceStats.tablet, color: "#F8B500" },
-  ];
+const DeviceStatsChart: React.FC<Props> = ({ metrics }) => {
   const chartConfig = {
-    visitors: {label: "Visitors"},
-    Desktop: {label: "Desktop", color: "hsl(var(--chart-1))"},
-    Mobile: { label: "Mobile", color: "hsl(var(--chart-2))"},
-    Tablet: { label: "Tablet", color: "hsl(var(--chart-3))" }
-  } satisfies ChartConfig
+    Desktop: { label: "Desktop", color: "#29B6F6"  },
+    Mobile: { label: "Mobile", color:  "#FF7043" },
+    Tablet: { label: "Tablet", color: "#66BB6A" },
+  } satisfies ChartConfig ;
+
+  // Format the data properly
+  const formattedMetrics = metrics.map((metric) => ({
+    timestamp: new Date(metric.timestamp).toLocaleTimeString(), // Format timestamp
+    Desktop: metric.deviceStats.desktop, // Desktop visitors count
+    Mobile: metric.deviceStats.mobile, // Mobile visitors count
+    Tablet: metric.deviceStats.tablet, // Tablet visitors count
+  }));
 
   return (
-    <Card className="flex flex-col">
-      <CardHeader className="items-center pb-0">
-        <CardTitle>Device Distribution</CardTitle>
-        <CardDescription>Breakdown of user devices.</CardDescription>
+    <Card>
+      <CardHeader>
+        <CardTitle>{words.devdistribution}</CardTitle>
+        <CardDescription>{words.devdismes}</CardDescription>
       </CardHeader>
-      <CardContent className="flex-1 pb-0">
-        <ChartContainer config={chartConfig}          
-        className="flex w-full sm:w-[350px] md:w-[450px] lg:w-[550px] h-[320px] mx-auto"
-        >
-            <PieChart>
-              <Pie data={data} dataKey="value" cx="50%" cy="50%" outerRadius={100} label>
-                {data.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
-                ))}
-              </Pie>
-              <ChartLegend
-                content={<ChartLegendContent nameKey="name" />}
-                className="flex-wrap gap-2 [&>*]:basis-1/3 [&>*]:justify-center"
-              />
-            </PieChart>
+      <CardContent>
+        <ChartContainer config={chartConfig}>
+          <LineChart data={formattedMetrics} margin={{ left: 8, right: 8 }}>
+            <CartesianGrid vertical={false} strokeDasharray="3 3" />
+            <XAxis
+              dataKey="timestamp"
+              tickMargin={8}
+              tickFormatter={(time) => time} // Display formatted timestamp
+              tickLine={false}
+              axisLine={false}
+            />
+            <YAxis tickLine={false} axisLine={false} label={{ value: "visits", angle: -90, position: "insideLeft" }} />
+            <ChartTooltip cursor={{ stroke: "hsl(var(--muted))" }} content={<ChartTooltipContent />} />
+            
+            {/* Desktop Line */}
+            <Line type="monotone" dataKey="Desktop" stroke="#29B6F6" strokeWidth={2} dot={false} />
+            {/* Mobile Line */}
+            <Line type="monotone" dataKey="Mobile" stroke="#FF7043" strokeWidth={2} dot={false} />
+            {/* Tablet Line */}
+            <Line type="monotone" dataKey="Tablet" stroke="#66BB6A" strokeWidth={2} dot={false} />
+          </LineChart>
         </ChartContainer>
       </CardContent>
     </Card>
-  )
-}
+  );
+};
 
-export default DeviceStatsChart
+export default DeviceStatsChart;

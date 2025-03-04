@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button } from "./ui/button";
 import { RefreshCcw } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
+import { words } from "@/textConfig";
 interface Props {
     unique_key:string
 }
@@ -45,7 +46,7 @@ const UpdateWebsite = ({unique_key}:Props) => {
       </Button>
       </TooltipTrigger>
       <TooltipContent>
-        <p>Update website calculations</p>
+        <p>{words.updatewebsite}</p>
       </TooltipContent>
       </Tooltip>
     </TooltipProvider>

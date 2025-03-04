@@ -8,6 +8,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/t
 import { toast } from "sonner";
 import { siteConfig } from "@/siteConfig";
 import { Website } from "./types";
+import { words } from "@/textConfig";
 
 interface UpdateProps {
   website: Website;
@@ -68,15 +69,15 @@ const Update: React.FC<UpdateProps> = ({ website }) => {
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Update Website</DialogTitle>
+                <DialogTitle>{words.editwebsite}</DialogTitle>
               </DialogHeader>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <Label htmlFor="url">Website URL</Label>
+                  <Label htmlFor="url">{words.websiteurl}</Label>
                   <Input id="url" value={url} onChange={(e) => setUrl(e.target.value)} placeholder="https://example.com" />
                 </div>
                 <div>
-                  <Label htmlFor="desc">Description (optional)</Label>
+                  <Label htmlFor="desc">{words.description} </Label>
                   <Input id="desc" value={desc} onChange={(e) => setDesc(e.target.value)} placeholder="Describe your website" />
                 </div>
                 <Button type="submit" disabled={loading}>
@@ -86,7 +87,7 @@ const Update: React.FC<UpdateProps> = ({ website }) => {
             </DialogContent>
           </Dialog>
         </TooltipTrigger>
-        <TooltipContent>Update Website</TooltipContent>
+        <TooltipContent>{words.editwebsite}</TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );

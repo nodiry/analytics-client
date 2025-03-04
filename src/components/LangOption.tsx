@@ -23,10 +23,10 @@ const LangOption = () => {
           English
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => changeLang("uz")}>
-          Uzbek
+          O'zbekcha
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => changeLang("kr")}>
-          Korean
+          한국어
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

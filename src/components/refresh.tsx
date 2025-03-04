@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { siteConfig } from "@/siteConfig";
 import { useState } from "react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
+import { words } from "@/textConfig";
 
 interface RefreshMetricsProps {
   unique_key: string;
@@ -65,7 +66,7 @@ const RefreshMetrics: React.FC<RefreshMetricsProps> = ({ unique_key }) => {
                 </Button>
             </TooltipTrigger>
             <TooltipContent>
-                <p>Get new data by pressing this button</p>
+                <p>{words.refreshmetric}</p>
             </TooltipContent>
         </Tooltip>
     </TooltipProvider>

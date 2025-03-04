@@ -100,7 +100,7 @@ const fSD = (seconds: number) => {
 };
 
 // Reusable StatCard Component
-const StatCard: React.FC<{ title: string; value: string | number }> = ({ title, value }) => (
+export const StatCard: React.FC<{ title: string; value: string | number }> = ({ title, value }) => (
   <Card className="p-3 text-center border">
     <CardTitle className="text-md font-medium">{title}</CardTitle>
     <p className="text-lg font-bold">{value}</p>

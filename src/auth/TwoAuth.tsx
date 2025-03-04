@@ -4,6 +4,7 @@ import { siteConfig } from '../siteConfig';
 import { words } from '../textConfig';
 import { InputOTP, InputOTPGroup,InputOTPSeparator,InputOTPSlot,} from '@/components/ui/input-otp';
 import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
 
 const TwoAuth = () => {
   const [code, setCode] = useState('');
@@ -15,6 +16,10 @@ const TwoAuth = () => {
     e.preventDefault();
     if (!email) {
       setError('Authentication token is missing. Please log in again.');
+      return;
+    }
+    if (code.length == 6) {
+      toast.error("Please enter full code!");
       return;
     }
     try {
@@ -39,6 +44,8 @@ const TwoAuth = () => {
   return (
     <div className="flex flex-col items-center justify-center w-full h-screen">
       <div className="flex flex-col w-[90%] max-w-md p-6 mx-auto bg-card rounded-lg shadow-md border">
+      <img src="/favicon.png" className="mx-auto" alt="Logo" width={90} height={90} />
+      <h1 className="mx-auto mb-4 text-2xl font-bold">📊 Web Analytics</h1>
         <p className="text-xl font-semibold text-primary text-center">{email}</p>
         <p className="text-lg text-muted-foreground text-center mb-4">{words.twoauthm}</p>
 
@@ -67,7 +74,7 @@ const TwoAuth = () => {
 
           {/* ✅ ShadCN Buttons */}
           <Button type="submit" className="w-full">
-            {words.send}
+            {words.delconfirm}
           </Button>
         </form>
       </div>

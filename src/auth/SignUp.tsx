@@ -54,8 +54,8 @@ const SignUp = () => {
   return (
     <div className="flex flex-col items-center justify-center w-full min-h-screen">
       <div className="flex flex-col w-[90%] max-w-md p-6 mx-auto bg-card rounded-lg shadow-md border">
-        <img src="/logo.png" className="m-3" alt="Logo" width={90} height={90} />
-
+        <img src="/favicon.png" className="mx-auto" alt="Logo" width={90} height={90} />
+        <h1 className="mx-auto mb-4 text-2xl font-bold">📊 Web Analytics</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           {error && <div className="text-red-500 text-center">{error}</div>}
 
