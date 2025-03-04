@@ -18,7 +18,7 @@ const TwoAuth = () => {
       setError('Authentication token is missing. Please log in again.');
       return;
     }
-    if (code.length == 6) {
+    if (code.length !== 6) {
       toast.error("Please enter full code!");
       return;
     }
@@ -27,13 +27,14 @@ const TwoAuth = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials:'include',
-        body: JSON.stringify({ email, code }),
+        body: JSON.stringify({ email, passcode:code }),
       });
 
       const data = await response.json();
       if (!response.ok) throw new Error(data.message || 'Something went wrong');
         
         localStorage.setItem('user', JSON.stringify(data.user));
+        localStorage.setItem('web', '[]');
         navigate('/dashboard');
       
     } catch (error) {
