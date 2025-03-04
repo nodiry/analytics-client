@@ -115,7 +115,7 @@ const TechMarquee = ({ techStack }: { techStack: string[] }) => {
             <Link to="/auth/signup">Try for Free</Link>
           </Button>
           <p className="rounded-lg border p-2 flex-row">
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" ><Github/></a>
+            <a className="hover:bg-neutral-500" href="https://github.com/Turan-Nadir/analytics-client" target="_blank" rel="noopener noreferrer" ><Github/> Get Code</a>
           </p>
         </div>
       </motion.div>
