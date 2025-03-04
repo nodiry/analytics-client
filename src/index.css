@@ -142,3 +142,27 @@
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes marqueeScroll {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee {
+  display: flex;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+}
+
+.marquee-inner {
+  display: flex;
+  min-width: 200%;
+  animation: marqueeScroll 10s linear infinite;
+  will-change: transform;
+}
+
