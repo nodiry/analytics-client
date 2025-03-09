@@ -5,6 +5,8 @@ import { words } from '../textConfig';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Eye, EyeClosed } from 'lucide-react';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { GoogleLoginButton } from './google';
 
 interface FormData {
   username: string;
@@ -56,6 +58,11 @@ const SignUp = () => {
       <div className="flex flex-col w-[90%] max-w-md p-6 mx-auto bg-card rounded-lg shadow-md border">
         <img src="/favicon.png" className="mx-auto" alt="Logo" width={90} height={90} />
         <h1 className="mx-auto mb-4 text-2xl font-bold">📊 Web Analytics</h1>
+        <GoogleOAuthProvider clientId={siteConfig.client}>
+            <div className="flex justify-center my-2">
+              <GoogleLoginButton />
+            </div>
+          </GoogleOAuthProvider>
         <form onSubmit={handleSubmit} className="space-y-4">
           {error && <div className="text-red-500 text-center">{error}</div>}
 

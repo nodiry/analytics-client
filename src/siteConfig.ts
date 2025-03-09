@@ -1,5 +1,6 @@
 const site : string = "https://was.glasscube.io/";
 export const siteConfig = {
+    client:"515658255492-ruu10dojnp4h9v5bra1ho852gq4sdc24.apps.googleusercontent.com",
     links : {
         signup:site + "auth/signup",
         signin:site+"auth/signin",
