@@ -5,8 +5,8 @@ import { words } from "../textConfig";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Eye, EyeClosed } from "lucide-react";
-import { GoogleLoginButton } from "./google";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { GoogleSignInButton } from "./googlelogin";
 
 interface FormData {
   password: string;
@@ -80,9 +80,9 @@ const SignIn = () => {
         <img src="/favicon.png" className="mx-auto" alt="Logo" width={90} height={90} />
         <h1 className="mx-auto mb-4 text-2xl font-bold">📊 Web Analytics</h1>
         {/* 🚀 Add Google Sign-In Button Here */}
-        <GoogleOAuthProvider clientId={siteConfig.client}>
+        <GoogleOAuthProvider clientId={siteConfig.links.client}>
             <div className="flex justify-center my-4">
-              <GoogleLoginButton />
+              <GoogleSignInButton />
             </div>
           </GoogleOAuthProvider>
         <form onSubmit={handleSubmit} className="space-y-4">
