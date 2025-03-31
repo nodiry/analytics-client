@@ -5,10 +5,11 @@ export const siteConfig = {
         signup:site + "auth/signup",
         signin:site+"auth/signin",
         twoauth:site+"auth/twoauth",
-        metrics:site + "metric/",
         profile:site+"auth/user",
+        forgot:site+"auth/forgot",
+        logout:site+"auth/logout",
+        metrics:site + "metric/",
         website:site+"web/",
-
     },
     uz: {
         last_modified:"Ohirgi o'zgarish vaqti: ",

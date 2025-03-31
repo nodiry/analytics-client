@@ -34,7 +34,7 @@ const TwoAuth = () => {
       if (!response.ok) throw new Error(data.message || 'Something went wrong');
         
         localStorage.setItem('user', JSON.stringify(data.user));
-        localStorage.setItem('web', '[]');
+        localStorage.setItem('web', JSON.stringify(data.web));
         navigate('/dashboard');
       
     } catch (error) {

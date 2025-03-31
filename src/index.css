@@ -143,26 +143,24 @@
   }
 }
 
-@keyframes marqueeScroll {
+.marquee {
+  display: flex;
+  width: 200%; /* Ensures seamless looping */
+  animation: scroll 10s linear infinite;
+}
+
+.marquee-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+}
+
+@keyframes scroll {
   from {
-    transform: translateX(0%);
+    transform: translateX(0);
   }
   to {
     transform: translateX(-50%);
   }
 }
-
-.marquee {
-  display: flex;
-  overflow: hidden;
-  white-space: nowrap;
-  position: relative;
-}
-
-.marquee-inner {
-  display: flex;
-  min-width: 200%;
-  animation: marqueeScroll 10s linear infinite;
-  will-change: transform;
-}
-

@@ -24,8 +24,8 @@ export default function HeroPage() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY, controls]);
 
-  const frontendTech = ["/react.svg", "/vite.png", "/bun.png", "/jwt.png", "/tailwind.svg", "/shadcn.png", "/framer.png", "/typescript.svg"];
-  const backendTech = ["/bun.png", "/express.svg", "/jwt.png", "/mongo.png", "/resend.png", "/typescript.svg"];
+  const frontendTech = ["/react.svg", "/vite.png", "/bun.webp", "/jwt.png", "/tailwind.svg", "/shadcn.webp", "/framer.png", "/typescript.svg"];
+  const backendTech = ["/bun.webp", "/express.svg", "/jwt.png", "/mongo.webp", "/resend.webp", "/typescript.svg"];
   
   const TechMarquee = ({ techStack }: { techStack: string[] }) => {
     return (
@@ -71,7 +71,7 @@ export default function HeroPage() {
             <Link to="/auth/signup">Try for Free</Link>
           </Button>
           <Button size="lg" variant="outline" asChild>
-            <a href="https://github.com/Turan-Nadir/analytics-client" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+            <a href="https://github.com/nodiry/analytics-client" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
               <Github className="w-5 h-5" /> Get Code 
             </a>
           </Button>        
@@ -80,8 +80,8 @@ export default function HeroPage() {
       
       <div className="hidden md:flex relative flex-row overflow-hidden">
         <motion.img initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.5 }}
-          whileHover={{ scale: 1.05 }} src="/dash_white.png" alt="Dashboard Screenshot"
-          className="relative z-10 w-[250px] shadow-lg border rounded-xl border-gray-700 mt-40 ml-40" />
+          whileHover={{ scale: 1.05 }} src="/dash_white.webp" alt="Dashboard Screenshot"
+          className="relative z-10 w-96 shadow-lg border rounded-xl border-gray-700 mt-40 ml-40" />
         <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }} whileHover={{ scale: 1.05 }}
           className="relative bg-gray-800 mt-8 ml-[-80px] h-fit rounded-xl shadow-lg w-8/12 max-w-full" >
           <div className="flex items-end px-4 py-2 bg-gray-700 rounded-t-xl">
@@ -91,7 +91,7 @@ export default function HeroPage() {
               <span className="w-3 h-3 bg-green-500 rounded-full"></span>
             </div>
           </div>
-          <motion.img src="/metrics.jpeg" alt="Metrics Screenshot" className="shadow-lg border rounded-b-xl border-gray-700" />
+          <motion.img src="/metrics.webp" alt="Metrics Screenshot" className="shadow-lg border rounded-b-xl border-gray-700" />
         </motion.div>
       </div>
      {/* Mobile Only */}
@@ -104,13 +104,13 @@ export default function HeroPage() {
   >
     <motion.img
       whileHover={{ scale: 1.05 }}
-      src="/dash_white.png"
+      src="/dash_white.webp"
       alt="Dashboard Screenshot"
       className="relative w-[270px] shadow-lg border rounded-xl border-gray-700 translate-x-[35px] "
     />
     <motion.img
       whileHover={{ scale: 1.05 }}
-      src="/metric_black.png"
+      src="/metric_black.webp"
       alt="Metrics Screenshot"
       className="absolute bottom-[-30px] left-[-30px] w-[190px] shadow-lg border rounded-xl border-gray-700"
     />

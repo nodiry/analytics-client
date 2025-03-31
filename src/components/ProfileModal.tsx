@@ -7,13 +7,14 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent,
   DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import LangOption from "./LangOption";
 import { ModeToggle } from "./mode-toggle";
+import { siteConfig } from "@/siteConfig";
 
 const ProfileModal = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false); 
 
   const logout = async () => {
-    await fetch("/logout", { method: "POST", credentials: "include" });
+    await fetch(siteConfig.links.logout, { method: "POST", credentials: "include" });
   };
   const handleLogout = () => {
     localStorage.clear();

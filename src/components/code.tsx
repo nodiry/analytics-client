@@ -11,32 +11,42 @@ interface Props {
 
 const CodeGuide = ({ unique_key }: Props) => {
   const scriptCode = `<script>
-(function () {
-  const analyticsServer = "https://track.glasscube.io/${unique_key}";
-  const getSessionId = () => {
-    const existing = localStorage.getItem("session_id");
-    if (existing) return existing;
-    const newId = "sess-" + Math.random().toString(36).substr(2, 9);
-    localStorage.setItem("session_id", newId);
-    return newId;
-  };
-  const getDeviceType = () => /Mobi|Android/i.test(navigator.userAgent) ? "mobile" : /Tablet|iPad/i.test(navigator.userAgent) ? "tablet" : "desktop";
-  const sendAnalyticsData = () => {
-    const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
-    const data = {
-      url: window.location.href,
-      referrer: document.referrer,
-      userAgent: navigator.userAgent,
-      timestamp: Date.now(),
-      loadTime: loadTime > 0 ? loadTime : 0,
-      session_id: getSessionId(),
-      deviceType: getDeviceType()
+  (function () {
+    const analyticsServer = "https://track.glasscube.io/${unique_key}";
+  
+    const getSessionId = () => {
+      const existing = localStorage.getItem("session_id");
+      if (existing) return existing;
+      const newId = "sess-" + Math.random().toString(36).substr(2, 9);
+      localStorage.setItem("session_id", newId);
+      return newId;
     };
-    navigator.sendBeacon(analyticsServer, JSON.stringify(data));
-  };
-  window.addEventListener("load", sendAnalyticsData);
-})();
-</script>`;
+  
+    const getDeviceType = () => 
+      /Mobi|Android/i.test(navigator.userAgent) ? "mobile" : 
+      /Tablet|iPad/i.test(navigator.userAgent) ? "tablet" : "desktop";
+  
+    const sendAnalyticsData = () => {
+      const data = {
+        url: window.location.href,
+        referrer: document.referrer,
+        userAgent: navigator.userAgent,
+        timestamp: Date.now(),
+        loadTime: performance.now(),  // More accurate load time
+        session_id: getSessionId(),
+        deviceType: getDeviceType()
+      };
+      navigator.sendBeacon(analyticsServer, JSON.stringify(data));
+    };
+  
+    if (document.readyState === "complete") {
+      sendAnalyticsData();
+    } else {
+      window.addEventListener("load", sendAnalyticsData);
+    }
+  })();
+  </script>`;
+  
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(scriptCode);

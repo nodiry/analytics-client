@@ -23,18 +23,21 @@ const SignIn = () => {
   // 🚀 Send Forgot Password Request
   const submitForget = async () => {
     try {
-      const response = await fetch(siteConfig.links.twoauth, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-        credentials: "include", // ✅ Send cookies with request
-      });
+      if (!formData.email) setError('Please fill the required fields');
+      else {
+        const response = await fetch(siteConfig.links.forgot, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: formData.email }),
+          credentials: "include", // ✅ Send cookies with request
+        });
 
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.message || "Something went wrong");
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.message || "Something went wrong");
 
-      localStorage.setItem("email", formData.email); // Save email for 2FA
-      navigate("/auth/twoauth");
+        localStorage.setItem("email", formData.email); // Save email for 2FA
+        navigate("/auth/twoauth");
+      }
     } catch (error) {
       setError(error instanceof Error ? error.message : "An unknown error occurred");
     }
@@ -50,25 +53,28 @@ const SignIn = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await fetch(siteConfig.links.signin, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include", // ✅ Include cookies
-        body: JSON.stringify(formData),
-      });      
+      if (!formData.email || !formData.password) setError('Please fill the required fields');
+      else {
+        const response = await fetch(siteConfig.links.signin, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include", // ✅ Include cookies
+          body: JSON.stringify(formData),
+        });
 
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.message || "Something went wrong");
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.message || "Something went wrong");
 
-      if (data.user === "twoauth") {
-        localStorage.setItem("email", formData.email);
-        navigate("/auth/twoauth");
-        return;
+        if (data.user === "twoauth") {
+          localStorage.setItem("email", formData.email);
+          navigate("/auth/twoauth");
+          return;
+        }
+
+        localStorage.setItem("user", JSON.stringify(data.user)); // Save user info
+        localStorage.setItem("web", JSON.stringify(data.web)); // Save user info
+        navigate("/dashboard");
       }
-
-      localStorage.setItem("user", JSON.stringify(data.user)); // Save user info
-      localStorage.setItem("web", JSON.stringify(data.web)); // Save user info
-      navigate("/dashboard");
     } catch (error) {
       setError(error instanceof Error ? error.message : "An unknown error occurred");
     }
@@ -81,10 +87,10 @@ const SignIn = () => {
         <h1 className="mx-auto mb-4 text-2xl font-bold">📊 Web Analytics</h1>
         {/* 🚀 Add Google Sign-In Button Here */}
         <GoogleOAuthProvider clientId={siteConfig.links.client}>
-            <div className="flex justify-center my-4">
-              <GoogleSignInButton />
-            </div>
-          </GoogleOAuthProvider>
+          <div className="flex justify-center my-4">
+            <GoogleSignInButton />
+          </div>
+        </GoogleOAuthProvider>
         <form onSubmit={handleSubmit} className="space-y-4">
           {error && <div className="text-red-500 text-center">{error}</div>}
 
@@ -94,7 +100,6 @@ const SignIn = () => {
             name="email"
             value={formData.email}
             onChange={handleInputChange}
-            required
           />
 
           <div className="relative">
@@ -104,7 +109,6 @@ const SignIn = () => {
               name="password"
               value={formData.password}
               onChange={handleInputChange}
-              required
             />
             <Button
               type="button"
